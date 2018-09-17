@@ -123,6 +123,36 @@
   SiteColor.prototype.compareContrastTo = function compareContrastTo (color) {
     return contrast(this.toRgbArray(), color.toRgbArray());
   };
+  SiteColor.prototype.darken = function darken (percent) {
+    percent = 1 - numberBound(parseFloat(percent), 0, 1);
+
+    this
+      .setRed(this.r * percent)
+      .setGreen(this.g * percent)
+      .setBlue(this.b * percent);
+
+    return this;
+  };
+  SiteColor.prototype.lighten = function lighten (percent) {
+    percent = 1 + numberBound(parseFloat(percent), 0, 1);
+
+    this
+      .setRed(this.r * percent)
+      .setGreen(this.g * percent)
+      .setBlue(this.b * percent);
+
+    return this;
+  };
+  SiteColor.prototype.blendWith = function blendWith (color, percent) {
+    percent = numberBound(parseFloat(percent), 0, 1);
+
+    this
+      .setRed((color.r - this.r) * percent + this.r)
+      .setGreen((color.g - this.g) * percent + this.g)
+      .setBlue((color.b - this.b) * percent + this.b);
+
+    return this;
+  };
 
   SiteColor.prototype.toRgbArray = function toRgbArray () {
     return [this.r, this.g, this.b];
