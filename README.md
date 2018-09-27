@@ -12,6 +12,8 @@ Return | Method | Description
 `SiteColor` | `setGreen (Integer green)` | Set green value to an integer between `0` and `255`.
 `SiteColor` | `setBlue (Integer blue)` | Set blue value to an integer between `0` and `255`.
 `SiteColor` | `setOpacity (Float opacity)` | Set opacity value to a float number between `0` and `1`.
+`SiteColor` | `save ()` | Save the current color values which can later be restored.
+`SiteColor` | `restore ()` | Restores the previously saved color values.
 `SiteColor` | `fillHex (String hex)` | Fill color values by hex string. For example, `#ff00aa` will result in 255 red, 0 green and 170 blue.
 `SiteColor` | `fillRgb (String rgb)` | Fill color values by rgb string in the format `rgb(255, 0, 170)`.
 `SiteColor` | `fillRgba (String rgba)` | Fill color values by rgba string in the format `rgb(255, 0, 170, 0.6)`.
@@ -54,5 +56,24 @@ back.fill('rgb(0, 0, 0)');
 
 front.compareContrastTo(back);
 > 21
+
+// Manipulate color and restore state
+var aColor = new SiteColor();
+
+aColor
+  .fill('#dad')
+  .save()
+  .toString();
+> '#ddaadd'
+
+aColor
+  .darken(0.3)
+  .toString();
+> '#9a769a'
+
+aColor
+  .restore()
+  .toString();
+> '#ddaadd'
 
 ```
