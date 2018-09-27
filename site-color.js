@@ -34,6 +34,7 @@
     this.g = null;
     this.b = null;
     this.opacity = null;
+    this._saved_state = [];
   };
 
   /**
@@ -81,6 +82,34 @@
   SiteColor.prototype.setOpacity = function setOpacity (opacity) {
     opacity = numberBound(parseFloat(opacity), 0, 1);
     this.opacity = isNaN(opacity) ? null : opacity;
+    return this;
+  };
+
+  /**
+   * Save the current color values which can later be restored.
+   *
+   * @see restore
+   * @returns {SiteColor}
+   */
+  SiteColor.prototype.save = function save () {
+    this._saved_state = [this.r, this.g, this.b, this.opacity];
+    return this;
+  };
+
+  /**
+   * Restores the previously saved color values.
+   *
+   * @see save
+   * @returns {SiteColor}
+   */
+  SiteColor.prototype.restore = function restore () {
+    if (this._saved_state.length === 4) {
+      this
+        .setRed(this._saved_state[0])
+        .setGreen(this._saved_state[1])
+        .setBlue(this._saved_state[2])
+        .setOpacity(this._saved_state[3]);
+    }
     return this;
   };
 
